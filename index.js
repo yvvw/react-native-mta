@@ -9,7 +9,7 @@ const Errs = {
   }
 }
 
-let const checkInitialResult = async () => {
+let checkInitialResult = async () => {
   let isInitialSucc = await RNMta.checkInitialResult()
   if (isInitialSucc === 'false') {
     throw Err.InitialFailed
@@ -18,4 +18,22 @@ let const checkInitialResult = async () => {
   return true
 }
 
-export default RNMta
+/**
+ * 注册 MTA
+ * @param  {String}  appKey
+ * @param  {String}  channel
+ * @param  {Boolean}  isDebug
+ * @return {Promise}
+ */
+const startWithAppkey = async ({
+  appKey,
+  channel,
+  isDebug = false
+}) => {
+  const res = await RNMta.startWithAppkey(appKey, isDebug ? 'true' : 'false', channel)
+  return res === 'true'
+}
+
+export default {
+  startWithAppkey
+}

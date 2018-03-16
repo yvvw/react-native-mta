@@ -2,22 +2,23 @@
 
 @implementation RNMta
 
-static bool isRunSucc = false;
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _isRunSuccess = false;
+    }
+    return self;
+}
 
 - (dispatch_queue_t)methodQueue
 {
     return dispatch_get_main_queue();
 }
 
-+ (void)startWithAppkey:(NSString *)appKey
++ (BOOL)requiresMainQueueSetup
 {
-    if([appKey length] != 0) {
-        [MTA startWithAppkey:appKey];
-        isRunSucc = true;
-        NSLog(@"MTA init success. appKey: %@", appKey);
-    } else {
-        NSLog(@"There is no appKey for MTA.");
-    }
+    return YES;
 }
 
 + (NSString *)getOperateResult:(BOOL)isOperateSucc
@@ -27,11 +28,28 @@ static bool isRunSucc = false;
 
 RCT_EXPORT_MODULE()
 
+RCT_REMAP_METHOD(startWithAppkey,
+                 startWithAppkey:(NSString *)appKey
+                 isDebug:(NSString *)isDebug
+                 channel:(NSString *)channel
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    if(![appKey isEqualToString:@""]) {
+        [MTA startWithAppkey:appKey];
+        _isRunSuccess = true;
+        NSLog(@"MTA init success. appKey: %@", appKey);
+    } else {
+        NSLog(@"There is no appKey for MTA.");
+    }
+    resolve([RNMta getOperateResult:_isRunSuccess]);
+}
+
 RCT_REMAP_METHOD(checkInitialResult,
                  checkInitialResultWithResolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-    resolve([RNMta getOperateResult:isRunSucc]);
+    resolve([RNMta getOperateResult:_isRunSuccess]);
 }
 
 @end

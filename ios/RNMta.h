@@ -4,7 +4,6 @@
 
 @interface RNMta : NSObject <RCTBridgeModule>
 
-+ (void)startWithAppkey:(NSString *)appKey;
+@property (nonatomic) BOOL isRunSuccess;
 
 @end
-  
