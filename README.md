@@ -5,13 +5,13 @@
 ## 安装
 
 ```bash
-yarn add react-native-mta
+yarn add @yyyyu/react-native-mta
 ```
 
 or
 
 ```bash
-npm install --save react-native-mta
+npm install --save @yyyyu/react-native-mta
 ```
 
 
