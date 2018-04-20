@@ -1,16 +1,23 @@
 {
   "name": "react-native-mta",
-  "version": "1.0.1",
-  "description": "",
+  "author": "yyyyu <g592842897@gmail.com>",
+  "version": "2.0.0",
+  "keywords": [
+    "react-native",
+    "tencent",
+    "mta"
+  ],
+  "description": "react native for tencent mta.",
+  "license": "MIT",
+  "homepage": "https://github.com/yyyyu/react-native-mta",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:yyyyu/react-native-mta.git"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "react-native"
-  ],
-  "author": "",
-  "license": "",
   "peerDependencies": {
     "react-native": ">0.50.0"
   }

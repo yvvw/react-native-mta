@@ -1,9 +1,10 @@
-#import <React/RCTBridgeModule.h>
 #import "MTA.h"
 #import "MTAConfig.h"
 
+#import <React/RCTBridgeModule.h>
+
 @interface RNMta : NSObject <RCTBridgeModule>
 
-@property (nonatomic) BOOL isRunSuccess;
+@property (readonly) BOOL isInitSuccess;
 
 @end

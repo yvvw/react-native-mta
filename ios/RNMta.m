@@ -2,54 +2,169 @@
 
 @implementation RNMta
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _isRunSuccess = false;
-    }
-    return self;
-}
-
-- (dispatch_queue_t)methodQueue
-{
-    return dispatch_get_main_queue();
-}
+RCT_EXPORT_MODULE()
 
 + (BOOL)requiresMainQueueSetup
 {
     return YES;
 }
 
-+ (NSString *)getOperateResult:(BOOL)isOperateSucc
+- (instancetype)init
 {
-    return isOperateSucc ? @"true" : @"false";
+    self = [super init];
+    if (self) {
+        _isInitSuccess = NULL;
+    }
+    return self;
 }
 
-RCT_EXPORT_MODULE()
+- (NSNumber *)getResolveResFromBool:(BOOL)boolValue
+{
+    return [NSNumber numberWithBool:boolValue];
+}
+
+
+#pragma 初始化
 
 RCT_REMAP_METHOD(startWithAppkey,
-                 startWithAppkey:(NSString *)appKey
-                 isDebug:(NSString *)isDebug
-                 channel:(NSString *)channel
+          startWithAppkey:(NSString *)anAppkey
+                  channel:(NSString *)aChannel
+                  isDebug:(BOOL)isDebug
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-    if(![appKey isEqualToString:@""]) {
-        [MTA startWithAppkey:appKey];
-        _isRunSuccess = true;
-        NSLog(@"MTA init success. appKey: %@", appKey);
+    if(![anAppkey isEqualToString:@""]) {
+        [MTA startWithAppkey:anAppkey];
+        _isInitSuccess = YES;
+        NSLog(@"MTA init success. appKey: %@", anAppkey);
     } else {
+        _isInitSuccess = NO;
         NSLog(@"There is no appKey for MTA.");
     }
-    resolve([RNMta getOperateResult:_isRunSuccess]);
+    resolve([self getResolveResFromBool:self.isInitSuccess]);
 }
 
 RCT_REMAP_METHOD(checkInitialResult,
-                 checkInitialResultWithResolver:(RCTPromiseResolveBlock)resolve
-                 rejecter:(RCTPromiseRejectBlock)reject)
+         checkInitialResultWithResolver:(RCTPromiseResolveBlock)resolve
+                               rejecter:(RCTPromiseRejectBlock)reject)
 {
-    resolve([RNMta getOperateResult:_isRunSuccess]);
+    resolve([self getResolveResFromBool:self.isInitSuccess]);
+}
+
+
+#pragma 统计页面时长
+
+RCT_REMAP_METHOD(trackPageBegin,
+               trackPageBegin:(NSString *)aPage
+                       appkey:(NSString *)anAppkey
+                     resolver:(RCTPromiseResolveBlock)resolve
+                     rejecter:(RCTPromiseRejectBlock)reject)
+{
+    [MTA trackPageViewBegin:aPage appkey:anAppkey];
+    resolve([self getResolveResFromBool:YES]);
+}
+
+RCT_REMAP_METHOD(trackPageEnd,
+               trackPageEnd:(NSString *)aPage
+                     appkey:(NSString *)anAppkey
+                 isRealTime:(BOOL)isRealTime
+                   resolver:(RCTPromiseResolveBlock)resolve
+                   rejecter:(RCTPromiseRejectBlock)reject)
+{
+    [MTA trackPageViewEnd:aPage appkey:anAppkey isRealTime:isRealTime];
+    resolve([self getResolveResFromBool:YES]);
+}
+
+
+#pragma 自定义事件
+
+RCT_REMAP_METHOD(trackCustomEvent,
+                trackCustomEvent:(NSString *)aEventId
+                  customerParams:(NSDictionary *)aCustomerParams
+                          appkey:(NSString *)anAppkey
+                      isRealTime:(BOOL)isRealTime
+                        resolver:(RCTPromiseResolveBlock)resolve
+                        rejecter:(RCTPromiseRejectBlock)reject)
+{
+    MTAErrorCode errCode = [MTA trackCustomKeyValueEvent:aEventId
+                                                   props:aCustomerParams
+                                                  appkey:anAppkey
+                                              isRealTime:isRealTime];
+    resolve([NSNumber numberWithInteger:(NSInteger)errCode]);
+}
+
+RCT_REMAP_METHOD(trackCustomEventBegin,
+               trackCustomEventBegin:(NSString *)aEventId
+                      customerParams:(NSDictionary *)aCustomerParams
+                              appkey:(NSString *)anAppkey
+                            resolver:(RCTPromiseResolveBlock)resolve
+                            rejecter:(RCTPromiseRejectBlock)reject)
+{
+    MTAErrorCode errCode = [MTA trackCustomKeyValueEventBegin:aEventId props:aCustomerParams appkey:anAppkey];
+    resolve([NSNumber numberWithInteger:(NSInteger)errCode]);
+}
+
+RCT_REMAP_METHOD(trackCustomEventEnd,
+               trackCustomEventEnd:(NSString *)aEventId
+                    customerParams:(NSDictionary *)aCustomerParams
+                            appkey:(NSString *)anAppkey
+                        isRealTime:(BOOL)isRealTime
+                          resolver:(RCTPromiseResolveBlock)resolve
+                          rejecter:(RCTPromiseRejectBlock)reject)
+{
+    MTAErrorCode errCode = [MTA trackCustomKeyValueEventEnd:aEventId
+                                                      props:aCustomerParams
+                                                     appkey:anAppkey
+                                                 isRealTime:isRealTime];
+    resolve([NSNumber numberWithInteger:(NSInteger)errCode]);
+}
+
+RCT_REMAP_METHOD(trackCustomEventDuration,
+             trackCustomEventDuration:(NSString *)aEventId
+                             duration:(float)aDuration
+                       customerParams:(NSDictionary *)aCustomerParams
+                               appkey:(NSString *)anAppkey
+                           isRealTime:(BOOL)isRealTime
+                             resolver:(RCTPromiseResolveBlock)resolve
+                             rejecter:(RCTPromiseRejectBlock)reject)
+{
+    MTAErrorCode errCode = [MTA trackCustomKeyValueEventDuration:aDuration
+                                                     withEventid:aEventId
+                                                           props:aCustomerParams
+                                                          appKey:anAppkey
+                                                      isRealTime:isRealTime];
+    resolve([NSNumber numberWithInteger:(NSInteger)errCode]);
+}
+
+
+#pragma 使用时长
+
+RCT_REMAP_METHOD(trackActiveBegin,
+         trackActiveBeginResolver:(RCTPromiseResolveBlock)resolve
+                         rejecter:(RCTPromiseRejectBlock)reject)
+{
+    [MTA trackActiveBegin];
+    resolve([NSNumber numberWithBool:YES]);
+}
+
+RCT_REMAP_METHOD(trackActiveEnd,
+         trackActiveEndResolver:(RCTPromiseResolveBlock)resolve
+                       rejecter:(RCTPromiseRejectBlock)reject)
+{
+    [MTA trackActiveEnd];
+    resolve([NSNumber numberWithBool:YES]);
+}
+
+
+#pragma 用户属性
+
+RCT_REMAP_METHOD(setUserProperty,
+                 setUserProperty:(NSDictionary *)aCustomerParams
+                        resolver:(RCTPromiseResolveBlock)resolve
+                        rejecter:(RCTPromiseRejectBlock)reject)
+{
+    [MTA setUserProperty:aCustomerParams];
+    resolve([NSNumber numberWithBool:YES]);
 }
 
 @end
