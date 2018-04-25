@@ -22,5 +22,4 @@ Pod::Spec.new do |s|
   s.default_subspecs = "Base"
 
   s.dependency "QQ_MTA"
-  s.dependency "React"
 end

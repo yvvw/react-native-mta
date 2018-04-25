@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		36A613A820493A1B006ACDAD /* libmtasdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A613A720493A1B006ACDAD /* libmtasdk.a */; };
+		36FD48F320905B7B004FBB7C /* libmtasdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36FD48F120905B7B004FBB7C /* libmtasdk.a */; };
 		B3E7B58A1CC2AC0600A0062D /* RNMta.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNMta.m */; };
 /* End PBXBuildFile section */
 
@@ -25,10 +25,9 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNMta.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNMta.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		36A613A420493A05006ACDAD /* MTACrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTACrashReporter.h; path = MTA/MTACrashReporter.h; sourceTree = "<group>"; };
-		36A613A520493A05006ACDAD /* MTA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTA.h; path = MTA/MTA.h; sourceTree = "<group>"; };
-		36A613A620493A05006ACDAD /* MTAConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTAConfig.h; path = MTA/MTAConfig.h; sourceTree = "<group>"; };
-		36A613A720493A1B006ACDAD /* libmtasdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmtasdk.a; path = MTA/libmtasdk.a; sourceTree = "<group>"; };
+		36FD48F020905B7B004FBB7C /* MTA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTA.h; path = SDK/MTA.h; sourceTree = "<group>"; };
+		36FD48F120905B7B004FBB7C /* libmtasdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmtasdk.a; path = SDK/libmtasdk.a; sourceTree = "<group>"; };
+		36FD48F220905B7B004FBB7C /* MTAConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTAConfig.h; path = SDK/MTAConfig.h; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNMta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNMta.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNMta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNMta.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -38,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				36A613A820493A1B006ACDAD /* libmtasdk.a in Frameworks */,
+				36FD48F320905B7B004FBB7C /* libmtasdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,15 +52,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		36A613A3204939F9006ACDAD /* MTA */ = {
+		36A613A3204939F9006ACDAD /* SDK */ = {
 			isa = PBXGroup;
 			children = (
-				36A613A520493A05006ACDAD /* MTA.h */,
-				36A613A620493A05006ACDAD /* MTAConfig.h */,
-				36A613A420493A05006ACDAD /* MTACrashReporter.h */,
-				36A613A720493A1B006ACDAD /* libmtasdk.a */,
+				36FD48F020905B7B004FBB7C /* MTA.h */,
+				36FD48F220905B7B004FBB7C /* MTAConfig.h */,
+				36FD48F120905B7B004FBB7C /* libmtasdk.a */,
 			);
-			name = MTA;
+			name = SDK;
 			sourceTree = "<group>";
 		};
 		58B511D21A9E6C8500147676 = {
@@ -69,7 +67,7 @@
 			children = (
 				B3E7B5881CC2AC0600A0062D /* RNMta.h */,
 				B3E7B5891CC2AC0600A0062D /* RNMta.m */,
-				36A613A3204939F9006ACDAD /* MTA */,
+				36A613A3204939F9006ACDAD /* SDK */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -228,6 +226,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MTA",
+					"$(PROJECT_DIR)/SDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNMta;
@@ -245,6 +244,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MTA",
+					"$(PROJECT_DIR)/SDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNMta;

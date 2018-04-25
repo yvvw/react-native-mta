@@ -18,35 +18,35 @@ npm install --save @yyyyu/react-native-mta
 
 ## 配置
 
-### ios(以下 3 种方式选择一种)
+### ios
 
-#### 1. 标准自动配置(项目没有使用 Pod 管理依赖)
-
-```bash
-react-native link react-native-mta
-```
-
-#### 2. Pod 自动配置(项目使用 Pod 管理依赖，由于源码需要依赖 React 会导致引用混淆)
+#### 1. 自动配置(推荐)
 
 ```bash
-react-native link react-native-mta
+react-native link @yyyyu/react-native-mta
 ```
 
-#### 3. 手动配置
+如果项目使用 Pods 管理依赖需要在 Podfile 中添加
+
+```ruby
+pod 'React', :path => '../node_modules/react-native', :subspecs => ['Dependency']
+```
+
+#### 2. 手动配置
 
 1. 使用 Xcode 打开项目，在项目依赖目录(Libraries)下添加 node_modules 中的 react-native-mta 项目
 2. 在 Linked Frameworks and Libraries 添加 libRNMta.a
 
-#### 额外配置(除使用 Pod 配置外，另外两种均需要进行此操作)
+#### 额外配置(使用 Pods 管理依赖不需要进行此操作)
 
-在 Linked Frameworks and Libraries 添加 libz.tbd libsqlite3.tbd SystemConfiguration.framework CFNetwork.framework CoreTelephony.framework􏰠􏰟 Security.framework
+在 Linked Frameworks and Libraries 添加 libsqlite3.tbd
 
 ### android(以下 2 种方式选择一种)
 
 #### 1. 自动配置(如果 IOS 已经运行过，不需要重复运行)
 
 ```bash
-react-native link react-native-mta
+react-native link @yyyyu/react-native-mta
 ```
 
 #### 2. 手动配置
@@ -55,7 +55,7 @@ react-native link react-native-mta
 
    ```Groovy
    include ':react-native-mta'
-   project(':react-native-mta').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-mta/android')
+   project(':react-native-mta').projectDir = new File(rootProject.projectDir, '../node_modules/@yyyyu/react-native-mta/android')
    ```
 
 2. 在 android/app/build.gradle 文件中依赖部分添加
@@ -100,6 +100,14 @@ android {
 
 
 ## JS API
+
+```javascript
+import mta from '@yyyyu/react-native-mta'
+
+mta.startWithAppkey({ appKey: 'appKey' })
+  .then(res => { console.log(res) })
+  .catch(err => { console.error(err) })
+```
 
 ### 参数说明
 

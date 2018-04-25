@@ -18,7 +18,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "rnpm": {
+    "commands": {
+      "postlink": "node node_modules/@yyyyu/react-native-mta/scripts/postlink"
+    }
+  },
   "peerDependencies": {
     "react-native": ">0.50.0"
+  },
+  "devDependencies": {
+    "standard": "^11.0.1"
   }
 }
