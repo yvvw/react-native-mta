@@ -1,7 +1,5 @@
 # react-native-mta
 
-
-
 ## 安装
 
 ```bash
@@ -14,8 +12,6 @@ or
 npm install --save @yyyyu/react-native-mta
 ```
 
-
-
 ## 配置
 
 ### ios
@@ -26,7 +22,7 @@ npm install --save @yyyyu/react-native-mta
 react-native link @yyyyu/react-native-mta
 ```
 
-如果项目使用 Pods 管理依赖需要在 Podfile 中添加
+如果项目**使用 Pods 管理依赖**需要在 Podfile 中添加(实现方式是通过在 react-native 项目中修改 React.podspec 文件来引入头文件，如果编译出错可以检查该文件，针对其它项目如果依赖 React 项目头，均可以使用此方法避免编译失败。)
 
 ```ruby
 pod 'React', :path => '../node_modules/react-native', :subspecs => ['Dependency']
@@ -48,38 +44,39 @@ pod 'React', :path => '../node_modules/react-native', :subspecs => ['Dependency'
 ```bash
 react-native link @yyyyu/react-native-mta
 ```
+由于有 npm scope 存在，导致自动 link 会添加 scope 包含 '@' 字符，导致 gradle 同步出错，所以在 link 后会自动化修改去除 scope 使 gradle 正常运行，如果多次 link 请手动删除重复的配置。
 
 #### 2. 手动配置
 
 1. 在 android/settings.gradle 文件中添加
 
-   ```Groovy
-   include ':react-native-mta'
-   project(':react-native-mta').projectDir = new File(rootProject.projectDir, '../node_modules/@yyyyu/react-native-mta/android')
-   ```
+    ```Groovy
+    include ':react-native-mta'
+    project(':react-native-mta').projectDir = new File(rootProject.projectDir, '../node_modules/@yyyyu/react-native-mta/android')
+    ```
 
 2. 在 android/app/build.gradle 文件中依赖部分添加
 
-  ```Groovy
-  dependencies {
-      // other dependencies
-      compile project(':react-native-mta')
-  }
-  ```
+    ```Groovy
+    dependencies {
+        // other dependencies
+        compile project(':react-native-mta')
+    }
+    ```
 
 3. 在 MainApplication.java 文件中添加
 
-  ```Java
-  import com.rnlib.mta.RNMtaPackage;
+    ```Java
+    import com.rnlib.mta.RNMtaPackage;
 
-  @Override
-  protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-  		// other packages
-          new RNMtaPackage()
-      );
-  }
-  ```
+    @Override
+    protected List<ReactPackage> getPackages() {
+        return Arrays.<ReactPackage>asList(
+          // other packages
+            new RNMtaPackage()
+        );
+    }
+    ```
 
 #### 额外配置
 
@@ -97,8 +94,6 @@ android {
 }
 ```
 
-
-
 ## JS API
 
 ```javascript
@@ -112,19 +107,15 @@ mta.startWithAppkey({ appKey: 'appKey' })
 ### 参数说明
 
 1. 参数注释带有 optional 字样为可选参数，括号内为默认值，e.g. optional('default')
-
-2. iosOnly androidOnly 为只有在相应平台才会生效
+2. iosOnly androidOnly 表示只有在相应平台才会生效
 
 ### 返回值说明
 
-1. 所有函数均以 es7 async 形式调用，react native 环境下会通过 babel 自动转换
-
-2. 如果未调用 startWithAppkey 初始化，调用其它函数会抛出异常，初始化后除 CustomEvent 系列函数有精确错误描述外，其余函数均以返回 boolean 表示调用成功或失败
-
-3. 返回类型
-
+1. 所有函数均以 es7 async 形式创建
+2. 如果库未初始化，调用函数会抛出初始化失败异常错误
+3. 除 CustomEvent 系列函数有精确错误描述(原生 SDK 提供错误信息)外，其余函数均以返回 boolean 表示调用成功或失败，由于上报与业务逻辑联系不紧密，所以即便调用失败情况下也不会抛出异常，避免未处理错误导致应用不必要的闪退
+4. 返回类型
    - Boolean
-
    - Object
 
      ```javascript
@@ -134,8 +125,6 @@ mta.startWithAppkey({ appKey: 'appKey' })
      { errCode: -3, errMsg: 'MTA传入参数过长' }
      { errCode: -9, errMsg: '未知错误' }
      ```
-
-     ​
 
 #### startWithAppkey 初始化 MTA 模块
 
@@ -159,7 +148,7 @@ trackPageBegin({
 #### trackPageEnd 跟踪页面关闭
 
 ```javascript
-trackPageBegin({
+trackPageEnd({
   page: 'page_id',       // 跟踪页面标识
   appKey: 'you app key', // iosOnly optional(初始化 appKey)
   isRealTime: false      // iosOnly optional(false) 是否实时上报数据
@@ -180,7 +169,7 @@ trackCustomEvent({
 #### trackCustomEventBegin 自定义事件开始
 
 ```javascript
-trackCustomEvent({
+trackCustomEventBegin({
   event: 'event_id',     // 事件标识
   params: {},            // optional({}) 事件参数
   appKey: 'you app key', // iosOnly optional(初始化 appKey)
@@ -191,7 +180,7 @@ trackCustomEvent({
 #### trackCustomEventEnd 自定义事件结束
 
 ```javascript
-trackCustomEvent({
+trackCustomEventEnd({
   event: 'event_id',     // 事件标识
   params: {},            // optional({}) 事件参数
   appKey: 'you app key', // iosOnly optional(初始化 appKey)
@@ -202,7 +191,7 @@ trackCustomEvent({
 #### trackCustomEventDuration 持续一段时间的自定义事件
 
 ```javascript
-trackCustomEvent({
+trackCustomEventDuration({
   event: 'event_id',     // 事件标识
   duration: 1000,        // 事件持续时间
   params: {},            // optional({}) 事件参数
