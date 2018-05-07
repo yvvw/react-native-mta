@@ -37,7 +37,7 @@ pod 'React', :path => '../node_modules/react-native', :subspecs => ['Dependency'
 
 在 Linked Frameworks and Libraries 添加 libsqlite3.tbd
 
-### android(以下 2 种方式选择一种)
+### android
 
 #### 1. 自动配置(如果 IOS 已经运行过，不需要重复运行)
 
@@ -108,6 +108,7 @@ mta.startWithAppkey({ appKey: 'appKey' })
 
 1. 参数注释带有 optional 字样为可选参数，括号内为默认值，e.g. optional('default')
 2. iosOnly androidOnly 表示只有在相应平台才会生效
+3. 事件类型接口参数值只支持字符串(sdk 限制: **目前单个参数值最长支持64位，请您控制参数值长度，不建议上传URL；支持类型为字符串类型，暂不支持其他类型。**)
 
 ### 返回值说明
 
@@ -129,7 +130,7 @@ mta.startWithAppkey({ appKey: 'appKey' })
 #### startWithAppkey 初始化 MTA 模块
 
 ```javascript
-startWithAppkey({
+mta.startWithAppkey({
   appKey: 'you app key', // mta 管理后台中拿到的 appKey(*ios android 不同*)
   channel: 'channel',    // androidOnly optional('')
   isDebug: false,        // androidOnly optional(false)
@@ -139,7 +140,7 @@ startWithAppkey({
 #### trackPageBegin 跟踪页面打开
 
 ```javascript
-trackPageBegin({
+mta.trackPageBegin({
   page: 'page_id',      // 页面标识
   appKey: 'you app key' // iosOnly optional(初始化 appKey)
 })
@@ -148,7 +149,7 @@ trackPageBegin({
 #### trackPageEnd 跟踪页面关闭
 
 ```javascript
-trackPageEnd({
+mta.trackPageEnd({
   page: 'page_id',       // 跟踪页面标识
   appKey: 'you app key', // iosOnly optional(初始化 appKey)
   isRealTime: false      // iosOnly optional(false) 是否实时上报数据
@@ -158,7 +159,7 @@ trackPageEnd({
 #### trackCustomEvent 自定义事件
 
 ```javascript
-trackCustomEvent({
+mta.trackCustomEvent({
   event: 'event_id',     // 事件标识
   params: {},            // optional({}) 事件参数
   appKey: 'you app key', // iosOnly optional(初始化 appKey)
@@ -169,7 +170,7 @@ trackCustomEvent({
 #### trackCustomEventBegin 自定义事件开始
 
 ```javascript
-trackCustomEventBegin({
+mta.trackCustomEventBegin({
   event: 'event_id',     // 事件标识
   params: {},            // optional({}) 事件参数
   appKey: 'you app key', // iosOnly optional(初始化 appKey)
@@ -180,7 +181,7 @@ trackCustomEventBegin({
 #### trackCustomEventEnd 自定义事件结束
 
 ```javascript
-trackCustomEventEnd({
+mta.trackCustomEventEnd({
   event: 'event_id',     // 事件标识
   params: {},            // optional({}) 事件参数
   appKey: 'you app key', // iosOnly optional(初始化 appKey)
@@ -191,7 +192,7 @@ trackCustomEventEnd({
 #### trackCustomEventDuration 持续一段时间的自定义事件
 
 ```javascript
-trackCustomEventDuration({
+mta.trackCustomEventDuration({
   event: 'event_id',     // 事件标识
   duration: 1000,        // 事件持续时间
   params: {},            // optional({}) 事件参数
@@ -203,17 +204,17 @@ trackCustomEventDuration({
 #### trackActiveBegin 跟踪应用进入前台
 
 ```javascript
-trackActiveBegin() // iosOnly
+mta.trackActiveBegin() // iosOnly
 ```
 
 #### trackActiveEnd 跟踪应用进入后台
 
 ```javascript
-trackActiveEnd() // iosOnly
+mta.trackActiveEnd() // iosOnly
 ```
 
 #### setUserProperty 设置自定义参数
 
 ```javascript
-setUserProperty({ customKey: 'customValue' })
+mta.setUserProperty({ customKey: 'customValue' })
 ```
