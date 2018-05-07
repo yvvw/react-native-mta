@@ -111,7 +111,7 @@ public class RNMtaModule extends ReactContextBaseJavaModule {
             String appKey,
             Boolean isRealTime,
             Promise promise) {
-        int result = StatService.trackCustomBeginKVEvent(
+        int result = StatService.trackCustomEndKVEvent(
                 this.reactContext,
                 eventId,
                 rnMapToProperties(customerParams));
