@@ -73,18 +73,16 @@ const trackCustomEvent = async ({
  * @param  {String}  event              事件名称
  * @param  {Object}  [params={}]        事件参数
  * @param  {String}  [appKey=null]
- * @param  {Boolean} [isRealTime=false] 是否实时上报
  * @return {Promise}
  */
 const trackCustomEventBegin = async ({
   event,
   params = {},
-  appKey = null,
-  isRealTime = false,
+  appKey = null
 }) => {
   await checkInitialResult()
   const result = await RNMta.trackCustomEventBegin(
-    event, params, appKey, isRealTime
+    event, params, appKey
   )
   return handleResult(result)
 }

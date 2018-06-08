@@ -1,26 +1,16 @@
+#import "MTA.h"
+#import "MTAConfig.h"
 #import "RNMta.h"
 
-@implementation RNMta
+@implementation RNMta {
+    BOOL _isInitSuccess;
+}
 
 RCT_EXPORT_MODULE()
 
 + (BOOL)requiresMainQueueSetup
 {
     return YES;
-}
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _isInitSuccess = NULL;
-    }
-    return self;
-}
-
-- (NSNumber *)getResolveResFromBool:(BOOL)boolValue
-{
-    return [NSNumber numberWithBool:boolValue];
 }
 
 
@@ -41,14 +31,14 @@ RCT_REMAP_METHOD(startWithAppkey,
         _isInitSuccess = NO;
         NSLog(@"There is no appKey for MTA.");
     }
-    resolve([self getResolveResFromBool:self.isInitSuccess]);
+    resolve([self getResolveResFromBool:_isInitSuccess]);
 }
 
 RCT_REMAP_METHOD(checkInitialResult,
          checkInitialResultWithResolver:(RCTPromiseResolveBlock)resolve
                                rejecter:(RCTPromiseRejectBlock)reject)
 {
-    resolve([self getResolveResFromBool:self.isInitSuccess]);
+    resolve([self getResolveResFromBool:_isInitSuccess]);
 }
 
 
@@ -165,6 +155,13 @@ RCT_REMAP_METHOD(setUserProperty,
 {
     [MTA setUserProperty:aCustomerParams];
     resolve([NSNumber numberWithBool:YES]);
+}
+
+
+#pragma other
+- (NSNumber *)getResolveResFromBool:(BOOL)boolValue
+{
+    return [NSNumber numberWithBool:boolValue];
 }
 
 @end

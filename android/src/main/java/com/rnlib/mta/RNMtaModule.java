@@ -94,7 +94,6 @@ public class RNMtaModule extends ReactContextBaseJavaModule {
             String eventId,
             ReadableMap customerParams,
             String appKey,
-            Boolean isRealTime,
             Promise promise) {
         int result = StatService.trackCustomBeginKVEvent(
                 this.reactContext,
