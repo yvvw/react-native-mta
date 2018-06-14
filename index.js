@@ -14,7 +14,7 @@ const startWithAppkey = async ({
   channel = '',
   isDebug = false
 }) => {
-  return await RNMta.startWithAppkey(appKey, channel, isDebug)
+  return RNMta.startWithAppkey(appKey, channel, isDebug)
 }
 
 /**
@@ -28,7 +28,7 @@ const trackPageBegin = async ({
   appKey = null
 }) => {
   await checkInitialResult()
-  return await RNMta.trackPageBegin(page, appKey)
+  return RNMta.trackPageBegin(page, appKey)
 }
 
 /**
@@ -41,10 +41,10 @@ const trackPageBegin = async ({
 const trackPageEnd = async ({
   page,
   appKey = null,
-  isRealTime = false,
+  isRealTime = false
 }) => {
   await checkInitialResult()
-  return await RNMta.trackPageEnd(page, appKey, isRealTime)
+  return RNMta.trackPageEnd(page, appKey, isRealTime)
 }
 
 /**
@@ -59,7 +59,7 @@ const trackCustomEvent = async ({
   event,
   params = {},
   appKey = null,
-  isRealTime = false,
+  isRealTime = false
 }) => {
   await checkInitialResult()
   const result = await RNMta.trackCustomEvent(
@@ -99,7 +99,7 @@ const trackCustomEventEnd = async ({
   event,
   params = {},
   appKey = null,
-  isRealTime = false,
+  isRealTime = false
 }) => {
   await checkInitialResult()
   const result = await RNMta.trackCustomEventEnd(
@@ -122,7 +122,7 @@ const trackCustomEventDuration = async ({
   duration,
   params = {},
   appKey = null,
-  isRealTime = false,
+  isRealTime = false
 }) => {
   await checkInitialResult()
   const result = await RNMta.trackCustomEventDuration(
@@ -138,7 +138,7 @@ const trackCustomEventDuration = async ({
 const trackActiveBegin = async () => {
   await checkInitialResult()
   if (Platform.OS === 'android') return false
-  return await RNMta.trackActiveBegin()
+  return RNMta.trackActiveBegin()
 }
 
 /**
@@ -148,7 +148,7 @@ const trackActiveBegin = async () => {
 const trackActiveEnd = async () => {
   await checkInitialResult()
   if (Platform.OS === 'android') return false
-  return await RNMta.trackActiveEnd()
+  return RNMta.trackActiveEnd()
 }
 
 /**
@@ -158,7 +158,7 @@ const trackActiveEnd = async () => {
  */
 const setUserProperty = async params => {
   await checkInitialResult()
-  return await RNMta.setUserProperty(params)
+  return RNMta.setUserProperty(params)
 }
 
 let checkInitialResult = async () => {
@@ -203,7 +203,7 @@ const Errs = {
   UNKNOW: {
     errCode: -9,
     errMsg: '未知错误'
-  },
+  }
 }
 
 export default {

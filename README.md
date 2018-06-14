@@ -22,7 +22,7 @@ npm install --save @yyyyu/react-native-mta
 react-native link @yyyyu/react-native-mta
 ```
 
-如果项目**使用 Pods 管理依赖**需要在 Podfile 中添加(实现方式是通过在 react-native 项目中修改 React.podspec 文件来引入头文件，如果编译出错可以检查该文件，针对其它项目如果依赖 React 项目头，均可以使用此方法避免编译失败。)
+如果项目**使用 Pods 管理依赖**需要在 Podfile 中添加
 
 ```ruby
 pod 'React', :path => '../node_modules/react-native', :subspecs => ['Dependency']
