@@ -30,6 +30,6 @@ repositories {
 dependencies {
     compile 'com.facebook.react:react-native:+'
 
-    compile 'com.qq.mta:mta:3.4.2-release'
-    compile 'com.tencent.mid:mid:4.0.6-release'
+    compile 'com.qq.mta:mta:3.3.1-release'
+    compile 'com.tencent.mid:mid:3.73-release'
 }
