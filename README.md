@@ -1,5 +1,8 @@
 # react-native-mta
 
+- iOS SDK VERSION 2.4.3
+- Android SDK VERSION 3.4.7
+
 ## 安装
 
 ```bash
